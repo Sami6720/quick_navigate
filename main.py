@@ -133,8 +133,18 @@ class Quick_Navigate():
 
         print(f"Alias doesn't exisit")
 
-    def update_alias(self):
-        raise NotImplementedError
+    def update_alias(self, name, new_content, new_name):
+        for idx, alias in enumerate(self.aliaes):
+            if alias.name == name:
+                alias_m = self.aliaes.pop(idx)
+                alias_m.name = new_name
+                alias_m.content = new_content
+                self.aliaes.append(alias_m)
+                self.insert_aliases_into_lines()
+                self.write_out_lines()
+                return
+
+        print(f"Alias doesn't exisit")
 
 
 if __name__ == '__main__':
