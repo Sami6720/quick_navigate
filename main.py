@@ -11,7 +11,7 @@ class Alias():
         self.time = kwargs['time']
 
     def create_alias_string(self) -> str:
-        alias_string = f"alias {self.name}='{self.content}' #NAME:{self.name}#CONTENT:{self.content}#TIMESTAMP:{self.time}"
+        alias_string = f"alias {self.name}='{self.content}' #NAME:{self.name}#CONTENT:{self.content}#TIMESTAMP:{self.time}\n"
         return alias_string
 
 
@@ -133,3 +133,4 @@ class Quick_Navigate():
 if __name__ == '__main__':
     qn=Quick_Navigate()
     qn.show_aliases()
+
