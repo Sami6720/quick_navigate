@@ -11,7 +11,7 @@ class Alias():
         self.time = kwargs['time']
 
     def create_alias_string(self) -> str:
-        alias_string = f"alias {self.name}='{self.content}' #NAME:{self.name}#CONTENT:{self.content}#TIMESTAMP:{self.time}\n"
+        alias_string = f"alias {self.name}='{self.content}' #NAME::{self.name}#CONTENT::{self.content}#TIME::{self.time}\n"
         return alias_string
 
 
