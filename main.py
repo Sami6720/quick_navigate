@@ -121,8 +121,6 @@ class Quick_Navigate():
         self.insert_aliases_into_lines()
         self.write_out_lines()
 
-        raise NotImplementedError
-
     def remove_alias(self):
         raise NotImplementedError
 
