@@ -97,9 +97,29 @@ class Quick_Navigate():
         for alias in alias_sort:
             print(self.table_format.format(alias.name, alias.content))
 
+    def insert_aliases_into_lines(self):
+
+        s, e = self.find_start_end()
+        assert s != e
+
+        for i in range(s + 1, e):
+            self.lines.pop(i)
+
+        for idx, alias in enumerate(self.aliaes):
+            self.lines.insert(s + 1 + idx, alias.create_alias_string()) # +1 because we want to insert between self.harp_stuff
+
+    def write_out_lines(self):
+        with open(self.bashrc_path,'w') as file:
+            file.writelines(self.lines)
+
     def add_alias(self, name: str, content: str) -> None:
 
-        time = datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
+        self.aliaes.append(
+            Alias(name=name, content=content,
+                  time=datetime.now().strftime("%d/%m/%Y, %H:%M:%S"))
+        )
+        self.insert_aliases_into_lines()
+        self.write_out_lines()
 
         raise NotImplementedError
 
