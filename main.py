@@ -110,7 +110,7 @@ class Quick_Navigate():
             self.lines.insert(s + 1, alias.create_alias_string())
 
     def write_out_lines(self):
-        with open(self.bashrc_path,'w') as file:
+        with open(self.bashrc_path, 'w') as file:
             file.writelines(self.lines)
 
     def add_alias(self, name: str, content: str) -> None:
@@ -130,6 +130,6 @@ class Quick_Navigate():
 
 
 if __name__ == '__main__':
-    qn=Quick_Navigate()
+    qn = Quick_Navigate()
     qn.show_aliases()
 
