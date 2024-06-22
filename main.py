@@ -102,11 +102,12 @@ class Quick_Navigate():
         s, e = self.find_start_end()
         assert s != e
 
-        for i in range(s + 1, e):
-            self.lines.pop(i)
+        for _ in range(s + 1, e):
+            self.lines.pop(s + 1)
 
-        for idx, alias in enumerate(self.aliaes):
-            self.lines.insert(s + 1 + idx, alias.create_alias_string()) # +1 because we want to insert between self.harp_stuff
+        for alias in self.aliaes:
+            # +1 because we want to insert between self.harp_stuff
+            self.lines.insert(s + 1, alias.create_alias_string())
 
     def write_out_lines(self):
         with open(self.bashrc_path,'w') as file:
