@@ -122,8 +122,16 @@ class Quick_Navigate():
         self.insert_aliases_into_lines()
         self.write_out_lines()
 
-    def remove_alias(self):
-        raise NotImplementedError
+    def remove_alias(self, name: str):
+
+        for idx, alias in enumerate(self.aliaes):
+            if alias.name == name:
+                self.aliaes.pop(idx)
+                self.insert_aliases_into_lines()
+                self.write_out_lines()
+                return
+
+        print(f"Alias doesn't exisit")
 
     def update_alias(self):
         raise NotImplementedError
