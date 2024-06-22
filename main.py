@@ -1,6 +1,6 @@
 import os
 from typing import List, Tuple
-from datetime import datetime 
+from datetime import datetime
 
 
 class Alias():
@@ -74,7 +74,8 @@ class Quick_Navigate():
         """Parse alias
 
             Example alias
-            alias cppu='salloc -c 4 --mem=20G -t 6:00:00' #NAME:cppu#CONTENT:...#TIMESTAMP:...#TYPE:...
+            #NAME:cppu#CONTENT:...#TIMESTAMP:...#TYPE:...
+            alias cppu='salloc -c 4 --mem=20G -t 6:00:00'
         """
 
         attrs = line.split('#')
@@ -110,5 +111,5 @@ class Quick_Navigate():
 
 
 if __name__ == '__main__':
-    qn = Quick_Navigate()
+    qn=Quick_Navigate()
     qn.show_aliases()
