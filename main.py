@@ -16,6 +16,7 @@ class Quick_Navigate():
         self.table_format = "{:<8} {:<25}"
         self.harp_stuff_start_end = self.find_start_end()
 
+
     def create_bashrc_file(self) -> None:
 
         if '.bashrc' not in os.listdir(os.environ['HOMEDRIVE'] + os.environ['HOMEPATH']):
@@ -80,6 +81,10 @@ class Quick_Navigate():
         print(self.table_format.format('Name', 'Content'))
         for alias in alias_sort:
             print(self.table_format.format(alias['NAME'], alias['CONTENT']))
+
+    def create_alias_string(self,name, content, time)-> str:
+        alias_string = f"alias {name}='{content}' #NAME:{name}#CONTENT:{content}#TIMESTAMP:{time}"
+        return alias_string
 
     def add_alias(self):
         raise NotImplementedError
