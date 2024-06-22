@@ -1,11 +1,24 @@
 import os
-from typing import Dict, List, Tuple
+from typing import List, Tuple
+from datetime import datetime 
+
+
+class Alias():
+
+    def __init__(self, **kwargs) -> None:
+        self.name = kwargs['name']
+        self.content = kwargs['content']
+        self.time = kwargs['time']
+
+    def create_alias_string(self) -> str:
+        alias_string = f"alias {self.name}='{self.content}' #NAME:{self.name}#CONTENT:{self.content}#TIMESTAMP:{self.time}"
+        return alias_string
 
 
 class Quick_Navigate():
 
     def __init__(self) -> None:
-        #TODO: Need to make this better
+        # TODO: Need to make this better
         self.bashrc_path = os.path.join(
             os.environ['HOMEDRIVE'] + os.environ['HOMEPATH'], '.bashrc')
         self.harp_stuff = '#HARP STUFF\n'
@@ -37,7 +50,7 @@ class Quick_Navigate():
 
         return s, e
 
-    def collect_aliases(self) -> List[Dict[str, str]]:
+    def collect_aliases(self) -> List[Alias]:
         """
         Collects all aliases and writes out harp stuff if not in lines.
         So next time needs to be written out.
@@ -51,13 +64,13 @@ class Quick_Navigate():
             s = len(self.lines) - 2
             e = len(self.lines) - 1
 
-        d: List[Dict[str, str]] = []
+        d: List[Alias] = []
         for i in range(s+1, e, 1):
             d.append(self.parse_alias(self.lines[i]))
 
         return d
 
-    def parse_alias(self, line: str) -> Dict[str, str]:
+    def parse_alias(self, line: str) -> Alias:
         """Parse alias
 
             Example alias
@@ -70,22 +83,23 @@ class Quick_Navigate():
         d = {}
         for attr in attrs:
             key, val = attr.split('::')
-            d[key.strip()] = val.strip()
+            d[key.strip().lower()] = val.strip()
 
-        return d
+        alias = Alias(**d)
+
+        return alias
 
     def show_aliases(self) -> None:
-        alias_sort = sorted(self.aliaes, key=lambda x: x['NAME'])
+        alias_sort = sorted(self.aliaes, key=lambda x: x.name)
 
         print(self.table_format.format('Name', 'Content'))
         for alias in alias_sort:
-            print(self.table_format.format(alias['NAME'], alias['CONTENT']))
+            print(self.table_format.format(alias.name, alias.content))
 
-    def create_alias_string(self, name, content, time) -> str:
-        alias_string = f"alias {name}='{content}' #NAME:{name}#CONTENT:{content}#TIMESTAMP:{time}"
-        return alias_string
+    def add_alias(self, name: str, content: str) -> None:
 
-    def add_alias(self):
+        time = datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
+
         raise NotImplementedError
 
     def remove_alias(self):
