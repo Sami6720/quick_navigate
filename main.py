@@ -147,7 +147,6 @@ class Quick_Navigate():
 
         print(f"Alias doesn't exisit")
 
-
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
@@ -156,6 +155,7 @@ if __name__ == '__main__':
     parser.add_argument('--add', '-a', action='store_true')
     parser.add_argument('--remove', '-r', action='store_true')
     parser.add_argument('--update', '-u', action='store_true')
+    parser.add_argument('--cwd', '-c', action='store_true')
 
     args = parser.parse_args()
 
@@ -183,4 +183,12 @@ if __name__ == '__main__':
         new_n = input('Please enter new name\n')
         new_c = input('Please enter new content\n')
         qn.update_alias(alias_name, new_c, new_n)
+        qn.show_aliases()
+
+    if args.cwd:
+        cwd = os.getcwd()
+        content = f'cd {cwd};'
+        alias_name = input('Enter the name of the alias to create\n')
+        alias_content = input(f'Current content is: {content}\nEnter the content to add after nav to cwd\n')
+        qn.add_alias(name=alias_name, content=content + alias_content)
         qn.show_aliases()
