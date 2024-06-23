@@ -32,7 +32,7 @@ class Quick_Navigate():
 
     def create_bashrc_file(self) -> None:
 
-        if '.bashrc' not in os.listdir(os.environ['HOMEDRIVE'] + os.environ['HOMEPATH']):
+        if '.bashrc' not in os.listdir(os.environ['HOME']):
             with open(self.bashrc_path, 'a'):
                 pass
 
