@@ -1,6 +1,7 @@
 import os
 from typing import List, Tuple
 from datetime import datetime
+import argparse
 
 
 class Alias():
@@ -148,6 +149,38 @@ class Quick_Navigate():
 
 
 if __name__ == '__main__':
-    qn = Quick_Navigate()
-    qn.show_aliases()
 
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('--show', '-s', action='store_true')
+    parser.add_argument('--add', '-a', action='store_true')
+    parser.add_argument('--remove', '-r', action='store_true')
+    parser.add_argument('--update', '-u', action='store_true')
+
+    args = parser.parse_args()
+
+    qn = Quick_Navigate()
+
+    if args.show:
+        qn.show_aliases()
+
+    if args.add:
+        alias_name = input('Enter the name of the alias to create\n')
+        alias_content = input('Enter the content of the alias\n')
+        qn.add_alias(name=alias_name, content=alias_content)
+        qn.show_aliases()
+
+    if args.remove:
+        qn.show_aliases()
+        qn.remove_alias(
+            input(f"Enter the name of the alias you want to remove\n"))
+        qn.show_aliases()
+
+    if args.update:
+        qn.show_aliases()
+        alias_name = input(
+            'Please enter the name of the alias you wanted update\n')
+        new_n = input('Please enter new name\n')
+        new_c = input('Please enter new content\n')
+        qn.update_alias(alias_name, new_c, new_n)
+        qn.show_aliases()
