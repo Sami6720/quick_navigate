@@ -1,5 +1,5 @@
 import os
-from typing import List, Tuple 
+from typing import List, Tuple
 from datetime import datetime
 import argparse
 
@@ -92,7 +92,8 @@ class Quick_Navigate():
         return alias
 
     def show_aliases(self) -> None:
-        alias_sort = sorted(self.aliaes, key=lambda x: datetime.strptime(x.time,"%d/%m/%Y, %H:%M:%S"), reverse=True)
+        alias_sort = sorted(self.aliaes, key=lambda x: datetime.strptime(
+            x.time, "%d/%m/%Y, %H:%M:%S"), reverse=True)
 
         print(self.table_format.format('Name', 'Content'))
         for alias in alias_sort[:5]:
@@ -153,6 +154,7 @@ class Quick_Navigate():
 
         print(f"Alias doesn't exisit")
 
+
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
@@ -204,6 +206,7 @@ if __name__ == '__main__':
         while qn.check_name_exists(alias_name):
             print(f"Name already exists. Pick another name")
             alias_name = input()
-        alias_content = input(f'Current content is: {content}\nEnter the content to add after nav to cwd\n')
+        alias_content = input(
+            f'Current content is: {content}\nEnter the content to add after nav to cwd\n')
         qn.add_alias(name=alias_name, content=content + alias_content)
         qn.show_aliases()
