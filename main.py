@@ -1,5 +1,5 @@
 import os
-from typing import List, Tuple
+from typing import List, Tuple 
 from datetime import datetime
 import argparse
 
@@ -114,6 +114,12 @@ class Quick_Navigate():
         with open(self.bashrc_path, 'w') as file:
             file.writelines(self.lines)
 
+    def check_name_exists(self, name: str):
+        for alias in self.aliaes:
+            if alias.name == name:
+                return True
+        return False
+
     def add_alias(self, name: str, content: str) -> None:
 
         self.aliaes.append(
@@ -166,6 +172,9 @@ if __name__ == '__main__':
 
     if args.add:
         alias_name = input('Enter the name of the alias to create\n')
+        while qn.check_name_exists(alias_name):
+            print(f"Name already exists. Pick another name")
+            alias_name = input()
         alias_content = input('Enter the content of the alias\n')
         qn.add_alias(name=alias_name, content=alias_content)
         qn.show_aliases()
@@ -181,6 +190,9 @@ if __name__ == '__main__':
         alias_name = input(
             'Please enter the name of the alias you wanted update\n')
         new_n = input('Please enter new name\n')
+        while qn.check_name_exists(new_n):
+            print(f"Name already exists. Pick another name")
+            new_n = input()
         new_c = input('Please enter new content\n')
         qn.update_alias(alias_name, new_c, new_n)
         qn.show_aliases()
@@ -189,6 +201,9 @@ if __name__ == '__main__':
         cwd = os.getcwd()
         content = f'cd {cwd};'
         alias_name = input('Enter the name of the alias to create\n')
+        while qn.check_name_exists(alias_name):
+            print(f"Name already exists. Pick another name")
+            alias_name = input()
         alias_content = input(f'Current content is: {content}\nEnter the content to add after nav to cwd\n')
         qn.add_alias(name=alias_name, content=content + alias_content)
         qn.show_aliases()
