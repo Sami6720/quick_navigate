@@ -92,10 +92,10 @@ class Quick_Navigate():
         return alias
 
     def show_aliases(self) -> None:
-        alias_sort = sorted(self.aliaes, key=lambda x: x.name)
+        alias_sort = sorted(self.aliaes, key=lambda x: datetime.strptime(x.time,"%d/%m/%Y, %H:%M:%S"), reverse=True)
 
         print(self.table_format.format('Name', 'Content'))
-        for alias in alias_sort:
+        for alias in alias_sort[:5]:
             print(self.table_format.format(alias.name, alias.content))
 
     def insert_aliases_into_lines(self):
