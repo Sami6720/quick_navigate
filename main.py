@@ -1,4 +1,5 @@
 import os
+import subprocess
 from typing import List, Tuple
 from datetime import datetime
 import argparse
@@ -114,6 +115,7 @@ class Quick_Navigate():
     def write_out_lines(self):
         with open(self.bashrc_path, 'w') as file:
             file.writelines(self.lines)
+        subprocess.run(self.bashrc_path, shell=True, executable='/bin/bash')
 
     def check_name_exists(self, name: str):
         for alias in self.aliaes:
