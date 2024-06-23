@@ -1,5 +1,4 @@
 import os
-import subprocess
 
 if __name__ == '__main__':
     bashrc_path = os.path.join(
@@ -11,4 +10,3 @@ if __name__ == '__main__':
         file.write("alias r='python  ~/quick_navigate/main.py -r'\n")
         file.write("alias c='python  ~/quick_navigate/main.py -c'\n")
         file.write('#HARP SET UP STUFF\n')
-        subprocess.run('source ~/.bashrc', shell=True, executable='/bin/bash')
