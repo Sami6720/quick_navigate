@@ -21,7 +21,7 @@ class Quick_Navigate():
     def __init__(self) -> None:
         # TODO: Need to make this better
         self.bashrc_path = os.path.join(
-            os.environ['HOMEDRIVE'] + os.environ['HOMEPATH'], '.bashrc')
+            os.environ['HOME'], '.bashrc')
         self.harp_stuff = '#HARP STUFF\n'
         self.create_bashrc_file()
         with open(self.bashrc_path, 'r') as file:
