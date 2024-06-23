@@ -33,7 +33,7 @@ class Quick_Navigate():
     def create_bashrc_file(self) -> None:
 
         if '.bashrc' not in os.listdir(os.environ['HOMEDRIVE'] + os.environ['HOMEPATH']):
-            with open(self.bashrc_path):
+            with open(self.bashrc_path, 'a'):
                 pass
 
     def find_start_end(self, ) -> Tuple[int, int]:
