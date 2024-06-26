@@ -20,11 +20,11 @@ class Quick_Navigate():
 
     def __init__(self) -> None:
         # TODO: Need to make this better
-        self.bashrc_path = os.path.join(
-            os.environ['HOME'], '.bashrc')
+        self.curr_aliases_file_path = os.path.join(
+            os.environ['HOME'], '.qn', 'curr_aliases.sh')
         self.harp_stuff = '#HARP STUFF\n'
         self.create_bashrc_file()
-        with open(self.bashrc_path, 'r') as file:
+        with open(self.curr_aliases_file_path, 'r') as file:
             self.lines = file.readlines()
         self.aliaes = self.collect_aliases()
         self.table_format = "{:<8} {:<25}"
@@ -32,8 +32,9 @@ class Quick_Navigate():
 
     def create_bashrc_file(self) -> None:
 
-        if '.bashrc' not in os.listdir(os.environ['HOME']):
-            with open(self.bashrc_path, 'a'):
+        if 'curr_aliases.sh' not in os.listdir(os.path.join(
+                os.environ['HOME'], '.qn')):
+            with open(self.curr_aliases_file_path, 'a'):
                 pass
 
     def find_start_end(self, ) -> Tuple[int, int]:
@@ -112,7 +113,7 @@ class Quick_Navigate():
             self.lines.insert(s + 1, alias.create_alias_string())
 
     def write_out_lines(self):
-        with open(self.bashrc_path, 'w') as file:
+        with open(self.curr_aliases_file_path, 'w') as file:
             file.writelines(self.lines)
 
     def check_name_exists(self, name: str):

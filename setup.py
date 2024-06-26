@@ -1,12 +1,12 @@
 import os
 
 if __name__ == '__main__':
-    bashrc_path = os.path.join(
-        os.environ['HOME'], '.bashrc')
-    with open(bashrc_path, 'a') as file:
-        file.write('\n#HARP SET UP STUFF\n')
-        file.write("alias s='python  ~/quick_navigate/main.py -s; source ~/.bashrc'\n")
-        file.write("alias a='python  ~/quick_navigate/main.py -a; source ~/.bashrc'\n")
-        file.write("alias r='python  ~/quick_navigate/main.py -r; source ~/.bashrc'\n")
-        file.write("alias c='python  ~/quick_navigate/main.py -c; source ~/.bashrc'\n")
-        file.write('#HARP SET UP STUFF\n')
+    file_path_base = os.path.join(
+        os.environ['HOME'], '.qn')
+    file_path = os.path.join(file_path_base, 'config.sh')
+    os.makedirs(file_path, exist_ok=True)
+    with open(file_path_base, 'a') as file:
+        file.write("alias s='python  ~/quick_navigate/main.py -s; source ~/.qn/curr_aliases.sh\n")
+        file.write("alias a='python  ~/quick_navigate/main.py -a; source ~/.qn/curr_aliases.sh'\n")
+        file.write("alias r='python  ~/quick_navigate/main.py -r; source ~/.qn/curr_aliases.sh'\n")
+        file.write("alias c='python  ~/quick_navigate/main.py -c; source ~/.qn/curr_aliases.sh'\n")
