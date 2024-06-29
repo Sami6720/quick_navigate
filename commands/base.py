@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from main import Quick_Navigate
+from quick_nav import Quick_Navigate
 
 
 class BaseCommand(ABC):
