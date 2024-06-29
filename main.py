@@ -2,6 +2,7 @@ import os
 from typing import List, Tuple
 from datetime import datetime
 import argparse
+from commands.command_factory import CommandFactory
 
 
 class Alias():
@@ -159,55 +160,8 @@ class Quick_Navigate():
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
-
-    parser.add_argument('--show', '-s', action='store_true')
-    parser.add_argument('--add', '-a', action='store_true')
-    parser.add_argument('--remove', '-r', action='store_true')
-    parser.add_argument('--update', '-u', action='store_true')
-    parser.add_argument('--cwd', '-c', action='store_true')
-
+    parser.add_argument('--name')
     args = parser.parse_args()
-
-    qn = Quick_Navigate()
-
-    if args.show:
-        qn.show_aliases()
-
-    if args.add:
-        alias_name = input('Enter the name of the alias to create\n')
-        while qn.check_name_exists(alias_name):
-            print(f"Name already exists. Pick another name")
-            alias_name = input()
-        alias_content = input('Enter the content of the alias\n')
-        qn.add_alias(name=alias_name, content=alias_content)
-        qn.show_aliases()
-
-    if args.remove:
-        qn.show_aliases()
-        qn.remove_alias(
-            input(f"Enter the name of the alias you want to remove\n"))
-        qn.show_aliases()
-
-    if args.update:
-        qn.show_aliases()
-        alias_name = input(
-            'Please enter the name of the alias you wanted update\n')
-        new_n = input('Please enter new name\n')
-        while qn.check_name_exists(new_n):
-            print(f"Name already exists. Pick another name")
-            new_n = input()
-        new_c = input('Please enter new content\n')
-        qn.update_alias(alias_name, new_c, new_n)
-        qn.show_aliases()
-
-    if args.cwd:
-        cwd = os.getcwd()
-        content = f'cd {cwd};'
-        alias_name = input('Enter the name of the alias to create\n')
-        while qn.check_name_exists(alias_name):
-            print(f"Name already exists. Pick another name")
-            alias_name = input()
-        alias_content = input(
-            f'Current content is: {content}\nEnter the content to add after nav to cwd\n')
-        qn.add_alias(name=alias_name, content=content + alias_content)
-        qn.show_aliases()
+    cmf = CommandFactory(args.name)
+    cmd = cmf.create_command()
+    cmd.execute()
