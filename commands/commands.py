@@ -18,6 +18,8 @@ class CommandFactory():
                 return Cwd()
             case 'update':
                 return Update()
+            case 'remove':
+                return Remove()
 
         raise Exception(
             f"Command {self.command_id} is not available in the command factory")
