@@ -2,7 +2,7 @@ import os
 from typing import List, Tuple
 from datetime import datetime
 import argparse
-from commands.command_factory import CommandFactory
+from commands.commands import CommandFactory
 
 
 class Alias():
