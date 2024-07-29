@@ -26,6 +26,6 @@ if __name__ == '__main__':
             file.write(
                 f"alias u='python  {install_path}/main.py --name udpate; source ~/.qn/curr_aliases.sh'\n")
 
-        print(""f"Setup completed. Please enter the line `source ~/.qn/config.sh` in your .bashrc and source it.""")
+        print("""Setup completed. Please enter the line `source ~/.qn/config.sh` in your .bashrc and source it.""")
     else:
         print("The setup was not completed")
