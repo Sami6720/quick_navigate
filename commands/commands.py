@@ -1,6 +1,7 @@
 import os
 from commands.base import BaseCommand
 
+
 class CommandFactory():
 
     def __init__(self, command_id: str) -> None:
@@ -23,6 +24,7 @@ class CommandFactory():
 
         raise Exception(
             f"Command {self.command_id} is not available in the command factory")
+
 
 class Show(BaseCommand):
     def __init__(self) -> None:
