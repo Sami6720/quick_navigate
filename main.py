@@ -2,6 +2,7 @@ import os
 from typing import List, Tuple
 from datetime import datetime
 import argparse
+from subprocess import run
 
 
 class Alias():
@@ -156,6 +157,14 @@ class Quick_Navigate():
         print(f"Alias doesn't exisit")
 
 
+    def get_alias(self, name: str) -> Alias:
+
+        for x in self.aliaes:
+            if x.name == name:
+                return x
+
+        raise ValueError(f"Alias {name} not found")
+
 if __name__ == '__main__':
 
     parser = argparse.ArgumentParser()
@@ -192,12 +201,19 @@ if __name__ == '__main__':
         qn.show_aliases()
         alias_name = input(
             'Please enter the name of the alias you wanted update\n')
-        new_n = input('Please enter new name\n')
-        while qn.check_name_exists(new_n):
-            print(f"Name already exists. Pick another name")
-            new_n = input()
-        new_c = input('Please enter new content\n')
-        qn.update_alias(alias_name, new_c, new_n)
+
+        while not qn.check_name_exists(alias_name):
+            print(f"Alias doesn't exist.")
+            alias_name = input()
+
+        run("rm -rf ~/.qn/temp_update.sh; touch ~/.qn/temp_update.sh", shell=True)
+        alias = qn.get_alias(alias_name)
+        run(f"nvim -c 'normal i{alias.content}' -f ~/.qn/temp_update.sh", shell=True)
+        with open(os.path.expanduser("~/.qn/temp_update.sh"), "r") as f:
+            line = f.readline()
+
+        new_c = line.strip()
+        qn.update_alias(alias_name, new_c, alias_name)
         qn.show_aliases()
 
     if args.cwd:
