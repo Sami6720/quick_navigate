@@ -187,9 +187,16 @@ if __name__ == '__main__':
         while qn.check_name_exists(alias_name):
             print(f"Name already exists. Pick another name")
             alias_name = input()
-        alias_content = input('Enter the content of the alias\n')
-        qn.add_alias(name=alias_name, content=alias_content)
-        qn.show_aliases()
+        run("rm -rf ~/.qn/temp_add.sh;", shell=True)
+        run(f"nvim -f ~/.qn/temp_add.sh", shell=True)
+        try:
+            with open(os.path.expanduser("~/.qn/temp_add.sh"), "r") as f:
+                line = f.readline()
+            alias_content = line.strip()
+            qn.add_alias(name=alias_name, content=alias_content)
+            qn.show_aliases()
+        except FileNotFoundError as e:
+            print("Content File not saved. Make sure to do :w after you add your content")
 
     if args.remove:
         qn.show_aliases()
@@ -223,7 +230,13 @@ if __name__ == '__main__':
         while qn.check_name_exists(alias_name):
             print(f"Name already exists. Pick another name")
             alias_name = input()
-        alias_content = input(
-            f'Current content is: {content}\nEnter the content to add after nav to cwd\n')
-        qn.add_alias(name=alias_name, content=content + alias_content)
-        qn.show_aliases()
+        run("rm -rf ~/.qn/temp_cwd_add.sh;", shell=True)
+        run(f"nvim -c 'normal i{content.strip()}' -f ~/.qn/temp_cwd_add.sh", shell=True)
+        try:
+            with open(os.path.expanduser("~/.qn/temp_cwd_add.sh"), "r") as f:
+                line = f.readline()
+            alias_content = line.strip()
+            qn.add_alias(name=alias_name, content=alias_content)
+            qn.show_aliases()
+        except FileNotFoundError as e:
+            print("Your add content file was not saved. Make sure to :w after you add your content")
