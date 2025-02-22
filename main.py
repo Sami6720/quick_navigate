@@ -167,6 +167,7 @@ class Quick_Navigate():
 
 if __name__ == '__main__':
 
+
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--show', '-s', action='store_true')
@@ -213,15 +214,19 @@ if __name__ == '__main__':
             print(f"Alias doesn't exist.")
             alias_name = input()
 
-        run("rm -rf ~/.qn/temp_update.sh; touch ~/.qn/temp_update.sh", shell=True)
+        run("rm -rf ~/.qn/temp_update.sh;", shell=True)
         alias = qn.get_alias(alias_name)
         run(f"nvim -c 'normal i{alias.content}' -f ~/.qn/temp_update.sh", shell=True)
-        with open(os.path.expanduser("~/.qn/temp_update.sh"), "r") as f:
-            line = f.readline()
+        try:
+            with open(os.path.expanduser("~/.qn/temp_update.sh"), "r") as f:
+                line = f.readline()
 
-        new_c = line.strip()
-        qn.update_alias(alias_name, new_c, alias_name)
-        qn.show_aliases()
+            new_c = line.strip()
+            qn.update_alias(alias_name, new_c, alias_name)
+            qn.show_aliases()
+
+        except FileNotFoundError as e:
+            print(f"Press :w to make sure the update you made is saved and used")
 
     if args.cwd:
         cwd = os.getcwd()
