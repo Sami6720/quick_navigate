@@ -98,7 +98,7 @@ class Quick_Navigate():
             x.time, "%d/%m/%Y, %H:%M:%S"), reverse=True)
 
         print(self.table_format.format('Name', 'Content'))
-        for alias in alias_sort[:5]:
+        for alias in alias_sort[:15]:
             print(self.table_format.format(alias.name, alias.content))
 
     def insert_aliases_into_lines(self):
@@ -170,80 +170,85 @@ if __name__ == '__main__':
 
     #TODO: Add KeyboardInterrupt Exception handling.
 
-    parser = argparse.ArgumentParser()
+    try:
 
-    parser.add_argument('--show', '-s', action='store_true')
-    parser.add_argument('--add', '-a', action='store_true')
-    parser.add_argument('--remove', '-r', action='store_true')
-    parser.add_argument('--update', '-u', action='store_true')
-    parser.add_argument('--cwd', '-c', action='store_true')
+        parser = argparse.ArgumentParser()
 
-    args = parser.parse_args()
+        parser.add_argument('--show', '-s', action='store_true')
+        parser.add_argument('--add', '-a', action='store_true')
+        parser.add_argument('--remove', '-r', action='store_true')
+        parser.add_argument('--update', '-u', action='store_true')
+        parser.add_argument('--cwd', '-c', action='store_true')
 
-    qn = Quick_Navigate()
+        args = parser.parse_args()
 
-    if args.show:
-        qn.show_aliases()
+        qn = Quick_Navigate()
 
-    if args.add:
-        alias_name = input('Enter the name of the alias to create\n')
-        while qn.check_name_exists(alias_name):
-            print(f"Name already exists. Pick another name")
-            alias_name = input()
-        run("rm -rf ~/.qn/temp_add.sh;", shell=True)
-        run(f"nvim -f ~/.qn/temp_add.sh", shell=True)
-        try:
-            with open(os.path.expanduser("~/.qn/temp_add.sh"), "r") as f:
-                line = f.readline()
-            alias_content = line.strip()
-            qn.add_alias(name=alias_name, content=alias_content)
-            qn.show_aliases()
-        except FileNotFoundError as e:
-            print("Content File not saved. Make sure to do :w after you add your content")
-
-    if args.remove:
-        qn.show_aliases()
-        qn.remove_alias(
-            input(f"Enter the name of the alias you want to remove\n"))
-        qn.show_aliases()
-
-    if args.update:
-        qn.show_aliases()
-        alias_name = input(
-            'Please enter the name of the alias you wanted update\n')
-
-        while not qn.check_name_exists(alias_name):
-            print(f"Alias doesn't exist.")
-            alias_name = input()
-
-        run("rm -rf ~/.qn/temp_update.sh;", shell=True)
-        alias = qn.get_alias(alias_name)
-        run(f"nvim -c 'normal i{alias.content}' -f ~/.qn/temp_update.sh", shell=True)
-        try:
-            with open(os.path.expanduser("~/.qn/temp_update.sh"), "r") as f:
-                line = f.readline()
-
-            new_c = line.strip()
-            qn.update_alias(alias_name, new_c, alias_name)
+        if args.show:
             qn.show_aliases()
 
-        except FileNotFoundError as e:
-            print(f"Press :w to make sure the update you made is saved and used")
+        if args.add:
+            alias_name = input('Enter the name of the alias to create\n')
+            while qn.check_name_exists(alias_name):
+                print(f"Name already exists. Pick another name")
+                alias_name = input()
+            run("rm -rf ~/.qn/temp_add.sh;", shell=True)
+            run(f"nvim -f ~/.qn/temp_add.sh", shell=True)
+            try:
+                with open(os.path.expanduser("~/.qn/temp_add.sh"), "r") as f:
+                    line = f.readline()
+                alias_content = line.strip()
+                qn.add_alias(name=alias_name, content=alias_content)
+                qn.show_aliases()
+            except FileNotFoundError as e:
+                print("Content File not saved. Make sure to do :w after you add your content")
 
-    if args.cwd:
-        cwd = os.getcwd()
-        content = f'cd {cwd};'
-        alias_name = input('Enter the name of the alias to create\n')
-        while qn.check_name_exists(alias_name):
-            print(f"Name already exists. Pick another name")
-            alias_name = input()
-        run("rm -rf ~/.qn/temp_cwd_add.sh;", shell=True)
-        run(f"nvim -c 'normal i{content.strip()}' -f ~/.qn/temp_cwd_add.sh", shell=True)
-        try:
-            with open(os.path.expanduser("~/.qn/temp_cwd_add.sh"), "r") as f:
-                line = f.readline()
-            alias_content = line.strip()
-            qn.add_alias(name=alias_name, content=alias_content)
+        if args.remove:
             qn.show_aliases()
-        except FileNotFoundError as e:
-            print("Your add content file was not saved. Make sure to :w after you add your content")
+            qn.remove_alias(
+                input(f"Enter the name of the alias you want to remove\n"))
+            qn.show_aliases()
+
+        if args.update:
+            qn.show_aliases()
+            alias_name = input(
+                'Please enter the name of the alias you wanted update\n')
+
+            while not qn.check_name_exists(alias_name):
+                print(f"Alias doesn't exist.")
+                alias_name = input()
+
+            run("rm -rf ~/.qn/temp_update.sh;", shell=True)
+            alias = qn.get_alias(alias_name)
+            run(f"nvim -c 'normal i{alias.content}' -f ~/.qn/temp_update.sh", shell=True)
+            try:
+                with open(os.path.expanduser("~/.qn/temp_update.sh"), "r") as f:
+                    line = f.readline()
+
+                new_c = line.strip()
+                qn.update_alias(alias_name, new_c, alias_name)
+                qn.show_aliases()
+
+            except FileNotFoundError as e:
+                print(f"Press :w to make sure the update you made is saved and used")
+
+        if args.cwd:
+            cwd = os.getcwd()
+            content = f'cd {cwd};'
+            alias_name = input('Enter the name of the alias to create\n')
+            while qn.check_name_exists(alias_name):
+                print(f"Name already exists. Pick another name")
+                alias_name = input()
+            run("rm -rf ~/.qn/temp_cwd_add.sh;", shell=True)
+            run(f"nvim -c 'normal i{content.strip()}' -f ~/.qn/temp_cwd_add.sh", shell=True)
+            try:
+                with open(os.path.expanduser("~/.qn/temp_cwd_add.sh"), "r") as f:
+                    line = f.readline()
+                alias_content = line.strip()
+                qn.add_alias(name=alias_name, content=alias_content)
+                qn.show_aliases()
+            except FileNotFoundError as e:
+                print("Your add content file was not saved. Make sure to :w after you add your content")
+
+    except KeyboardInterrupt as e:
+        print("The Quick Navigate program exited")
