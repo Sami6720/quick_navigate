@@ -133,6 +133,7 @@ class Quick_Navigate():
         self.write_out_lines()
 
     def remove_alias(self, name: str):
+        #TODO: Need to fix why even after removal alias runs. Need to unset probably.
 
         for idx, alias in enumerate(self.aliaes):
             if alias.name == name:
@@ -167,6 +168,7 @@ class Quick_Navigate():
 
 if __name__ == '__main__':
 
+    #TODO: Add KeyboardInterrupt Exception handling.
 
     parser = argparse.ArgumentParser()
 
